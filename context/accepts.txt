@@ -1,0 +1,9 @@
+text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+application/xml,application/xhtml+xml,text/html;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
+text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+image/jpeg, application/x-ms-application, image/gif, application/xaml+xml, image/pjpeg, application/x-ms-xbap, application/x-shockwave-flash, application/msword, */*
+text/html, application/xhtml+xml, image/jxr, */*\r\nAccept-Encoding: gzip
+text/html, application/xml;q=0.9, application/xhtml+xml, image/png, image/webp, image/jpeg, image/gif, image/x-xbitmap, */*;q=0.1
+text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8\r\nAccept-Language: en-US,en;q=0.5
+text/html, application/xhtml+xml
