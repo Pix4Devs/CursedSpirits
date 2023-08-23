@@ -90,7 +90,6 @@ func Init(){
 }
 
 func startFlood(){
-
 	if !strings.Contains(*TARGET, "http://") && !strings.Contains(*TARGET, "https://") {
 		log.Fatal("http:// or https:// scheme required for 'url' option, see <bin> -help for more info")
 	}
