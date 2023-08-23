@@ -38,6 +38,7 @@ var SubCommands = []*cobra.Command{
 		Use: "version",
 		Short: "Prints out the current VERSION of CursedSpirits",
 		Run: func(cmd *cobra.Command, args []string) {
+			defer os.Exit(0)
 			fmt.Printf("[VERSION] %s", globals.VERSION)
 		},
 	},
