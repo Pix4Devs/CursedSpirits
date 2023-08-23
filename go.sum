@@ -1,3 +1,5 @@
+github.com/MidasVanVeen/proxy-checker v0.0.0-20230822233427-3ffea3dd5c04 h1:87l7IVm/04fUYvGHNER64Mqe5BD95+IIP/SnxrV83Jg=
+github.com/MidasVanVeen/proxy-checker v0.0.0-20230822233427-3ffea3dd5c04/go.mod h1:Vy9cR//sWc6pcqMslmcm+m2y6kHgnjPNFv6Wcg34G8I=
 github.com/Pix4Devs/pix4lib v1.0.0 h1:teXr38uGCxWRnNrpQ+ckHCxQrGpHWRZOAZ+oXQmDGBw=
 github.com/Pix4Devs/pix4lib v1.0.0/go.mod h1:F/NivCRwIbSD3P7Icxo+5AJHVpE49K7DgBp1af3EclU=
 github.com/corpix/uarand v0.2.0 h1:U98xXwud/AVuCpkpgfPF7J5TQgr7R5tqT8VZP5KWbzE=

@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"Pix4Devs/CursedSpirits/filesystem"
 	"Pix4Devs/CursedSpirits/globals"
 	"fmt"
 	"log"
@@ -10,8 +11,11 @@ import (
 	"strings"
 	"time"
 
+	"github.com/MidasVanVeen/proxy-checker/pkg/proxyutils"
+	"github.com/MidasVanVeen/proxy-checker/pkg/proxychecker"
 	"github.com/Pix4Devs/pix4lib"
 	"github.com/Pix4Devs/pix4lib/proxyscraper"
+	"github.com/corpix/uarand"
 	"github.com/spf13/cobra"
 )
 
@@ -78,17 +82,72 @@ func Init(){
 			},
 		})
 
+		// SubCommands[3].Flags().Int("timeout", 5, "Defines timeout in seconds for proxy checking")
+		// SubCommands[3].Flags().Int("retries", 3, "Defines how many times the checker should retry to check a proxy")
 		// Add subcommand 'proxy' to parent command 'check'
 		SubCommands[3].AddCommand(&cobra.Command{
 			Use: "proxy",
 			Short: "Proxy checker supports only socks4/socks5",
 			Run: func(cmd *cobra.Command, args []string) {
 				defer os.Exit(0) // so that it does not bypass app break after this command has been performed,
-				// TODO
+				checkProxies(cmd)
 			},
 		})
 		// Below here add required flags if needed
 		// TODO
+	}
+}
+
+func checkProxies(cmd *cobra.Command) {
+	// tmOut, err := strconv.Atoi(cmd.Flags().Lookup("timeout").Value.String())
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	tmOut := 5
+	base, err := os.Getwd(); if err != nil {
+		log.Fatal(err)
+	}
+	fileEntry := map[string]interface{}{
+		"accepts.txt": &globals.ACCEPTS,
+		"proxies.txt": &globals.PROXIES,
+		"refs.txt":    &globals.REFS,
+	}
+
+	for k, v := range fileEntry {
+		data := filesystem.Read(filepath.Join(base,"context",k))
+		*v.(*[]string) = data
+	}
+	// retries, err := strconv.Atoi(cmd.Flags().Lookup("retries").Value.String())
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	retries := 3
+	checker, err := proxychecker.NewChecker(proxyutils.SOCKS5, time.Second * time.Duration(tmOut), retries);
+	if err != nil {
+		log.Fatal(err)
+	}
+	uas := make([]string, 0)
+	for i := 0; i < len(globals.PROXIES); i++ {
+		uas = append(uas, uarand.GetRandom())
+	}
+	i:=0
+	cleanProxies := checker.CleanList(globals.PROXIES, &uas, &globals.REFS, func(proxy string) {
+		i++
+		fmt.Printf("\r[PROXY CHECKER] %s\t[%d/%d]", proxy, i, len(globals.PROXIES));
+	})
+	fmt.Println()
+	// ask user if he wants to save the checked proxies
+	var save string
+	fmt.Print("[PROXY CHECKER] Do you want to save the checked proxies to proxies.txt? [y/n]: ")
+	fmt.Scanln(&save)
+	if save == "y" {
+		file, err := os.OpenFile(filepath.Join(base,"context","proxies.txt"), os.O_WRONLY|os.O_TRUNC, 0755)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer file.Close()
+
+		file.WriteString(strings.Join(cleanProxies, "\n"))
 	}
 }
 
