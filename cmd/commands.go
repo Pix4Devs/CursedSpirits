@@ -60,7 +60,6 @@ func Init(){
 		
 		// FLAGS for command 'scrape'
 		SubCommands[1].Flags().Int("timeout", 1000, "Defines timeout in seconds for proxy scraping")
-		SubCommands[1].MarkFlagRequired("timeout")
 
 		// Add subcommand for 'scrape' parent command
 		SubCommands[1].AddCommand(&cobra.Command{
