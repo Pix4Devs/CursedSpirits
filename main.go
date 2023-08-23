@@ -42,7 +42,7 @@ func main() {
 
 	var valid bool
 	for i := 0; i < len((*VALID_PROTOCOLS)); i++ {
-		fmt.Println((*VALID_PROTOCOLS)[i])
+		//fmt.Println((*VALID_PROTOCOLS)[i])
 		if (*VALID_PROTOCOLS)[i] == *PROXY_TYPE {
 			valid = true
 			break
