@@ -48,7 +48,7 @@ func main() {
 			break
 		}
 	}
-	os.Exit(0)
+	
 	if !valid {
 		log.Fatal("Proxy protocol can be only socks4 or socks5, see <bin> -help for more info")
 	}
