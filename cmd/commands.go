@@ -37,9 +37,8 @@ var SubCommands = []*cobra.Command{
 	{
 		Use: "start",
 		Short: "Starts the flood",
-		RunE: func(cmd *cobra.Command, args []string) error {
+		Run: func(cmd *cobra.Command, args []string) {
 			startFlood()
-			return nil
 		},
 	},
 	{
@@ -52,11 +51,8 @@ var SubCommands = []*cobra.Command{
 	{
 		Use: "version",
 		Short: "Prints out the current VERSION of CursedSpirits",
-		RunE: func(cmd *cobra.Command, args []string) error {
+		Run: func(cmd *cobra.Command, args []string) {
 			fmt.Printf("[VERSION] %s", globals.VERSION)
-			os.Exit(0)
-
-			return nil
 		},
 	},
 }
@@ -180,4 +176,5 @@ func scrapeCmd(cmd *cobra.Command){
 	defer file.Close()
 	
 	file.WriteString(strings.Join(proxies, "\n"))
+	fmt.Printf("[SCRAPER INFO]\nScraped with success!")
 }
