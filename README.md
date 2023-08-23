@@ -43,7 +43,7 @@ Get your self `Go` bin and chain set, afterwards you can use the `go build` comm
 
 ## TODO list
 
-- [ x ] Automatic proxy scraping
+- [x] Automatic proxy scraping
 - [ ] Automatic proxy checking
 
 # Disclaimer
