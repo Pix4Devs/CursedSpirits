@@ -17,6 +17,10 @@ CursedSpirits is a powerful stress testing tool designed to assess the robustnes
 
 ## Stats
 We have recorded a whopping 400 000 requests per second on our 8 core dedicated server with 1 Gbps network bandwidth.
+<p align="center">
+<img src="https://images-ext-1.discordapp.net/external/H9bTk-XvqRyQ5JjHgx19_mU1P6G_KsDS2_4USksEYLU/https/camo.githubusercontent.com/56f79ca67dbc72081b9619508e3e6b256e4621ba1953db2ce6710cceddfc0a72/68747470733a2f2f6d656469612e646973636f72646170702e6e65742f6174746163686d656e74732f3935363331303834303436343737333230302f313134333435303535323730363031313235362f696d6167652e706e673f77696474683d31343430266865696768743d363038?width=1440&height=607" >
+</p>
+
 
 ## Getting Started
 CursedSpirits requires golang to build follow the instructions at https://go.dev/doc/install to get your toolchain.
@@ -37,6 +41,27 @@ To use CursedSpirits, you need to follow these steps:
 You can use the `scrape` command to automatically populate `proxies.txt` with scraped proxy addresses.
 ## Usage
 CursedSpirits provides various commands to help you stress test your applications effectively. For information about these commands, run `./CursedSpirits help`
+
+```plain
+Usage:
+  ./CursedSpirits [command]
+
+Available Commands:
+  check       Check utilities
+  completion  Generate the autocompletion script for the specified shell
+  help        Help about any command
+  scrape      Scrape proxies
+  version     Prints out the current VERSION of CursedSpirits
+
+Flags:
+  -h, --help   help for ./CursedSpirits
+
+Additional help topics:
+  ./CursedSpirits start      Start flood
+
+Use "./CursedSpirits [command] --help" for more information about a command.
+```
+`
 
 We recommend running the following commands in succession, this assures the tool is ran with fresh and tested proxies.
 ```sh
