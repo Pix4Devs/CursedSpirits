@@ -11,8 +11,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MidasVanVeen/proxy-checker/pkg/proxyutils"
 	"github.com/MidasVanVeen/proxy-checker/pkg/proxychecker"
+	"github.com/MidasVanVeen/proxy-checker/pkg/proxyutils"
 	"github.com/Pix4Devs/pix4lib"
 	"github.com/Pix4Devs/pix4lib/proxyscraper"
 	"github.com/corpix/uarand"
@@ -82,28 +82,28 @@ func Init(){
 			},
 		})
 
-		// SubCommands[3].Flags().Int("timeout", 5, "Defines timeout in seconds for proxy checking")
-		// SubCommands[3].Flags().Int("retries", 3, "Defines how many times the checker should retry to check a proxy")
 		// Add subcommand 'proxy' to parent command 'check'
-		SubCommands[3].AddCommand(&cobra.Command{
+		proxy := cobra.Command{
 			Use: "proxy",
 			Short: "Proxy checker supports only socks4/socks5",
 			Run: func(cmd *cobra.Command, args []string) {
 				defer os.Exit(0) // so that it does not bypass app break after this command has been performed,
 				checkProxies(cmd)
 			},
-		})
+		}
+		(&proxy).Flags().Int("timeout", 5, "Defines timeout in seconds for proxy checking")
+		(&proxy).Flags().Int("retries", 3, "Defines how many times the checker should retry to check a proxy")
+		SubCommands[3].AddCommand(&proxy)
 		// Below here add required flags if needed
 		// TODO
 	}
 }
 
 func checkProxies(cmd *cobra.Command) {
-	// tmOut, err := strconv.Atoi(cmd.Flags().Lookup("timeout").Value.String())
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	tmOut := 5
+	tmOut, err := cmd.Flags().GetInt("timeout")
+	if err != nil {
+		tmOut = 5
+	}
 	base, err := os.Getwd(); if err != nil {
 		log.Fatal(err)
 	}
@@ -117,11 +117,10 @@ func checkProxies(cmd *cobra.Command) {
 		data := filesystem.Read(filepath.Join(base,"context",k))
 		*v.(*[]string) = data
 	}
-	// retries, err := strconv.Atoi(cmd.Flags().Lookup("retries").Value.String())
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	retries := 3
+	retries, err := cmd.Flags().GetInt("retries")
+	if err != nil {
+		retries = 3
+	}
 	checker, err := proxychecker.NewChecker(proxyutils.SOCKS5, time.Second * time.Duration(tmOut), retries);
 	if err != nil {
 		log.Fatal(err)
@@ -138,17 +137,20 @@ func checkProxies(cmd *cobra.Command) {
 	fmt.Println()
 	// ask user if he wants to save the checked proxies
 	var save string
-	fmt.Print("[PROXY CHECKER] Do you want to save the checked proxies to proxies.txt? [y/n]: ")
+	fmt.Print("[PROXY CHECKER] Enter file path for valid proxies. Leave blank to overwrite proxies.txt: ")
 	fmt.Scanln(&save)
-	if save == "y" {
-		file, err := os.OpenFile(filepath.Join(base,"context","proxies.txt"), os.O_WRONLY|os.O_TRUNC, 0755)
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer file.Close()
-
-		file.WriteString(strings.Join(cleanProxies, "\n"))
+	// TODO: validate file path
+	saveFile := filepath.Join(base,"context","proxies.txt")
+	if save != "" {
+		saveFile = filepath.Join(base, save)
 	}
+	file, err := os.OpenFile(saveFile, os.O_WRONLY|os.O_TRUNC, 0755)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	file.WriteString(strings.Join(cleanProxies, "\n"))
 }
 
 func scrapeCmd(cmd *cobra.Command){
