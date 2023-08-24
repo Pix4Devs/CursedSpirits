@@ -61,7 +61,7 @@ Additional help topics:
 
 Use "./CursedSpirits [command] --help" for more information about a command.
 ```
-`
+
 
 We recommend running the following commands in succession, this assures the tool is ran with fresh and tested proxies.
 ```sh
