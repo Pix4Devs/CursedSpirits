@@ -1,5 +1,5 @@
 <p align="center">
-<strong><a href="https://github.com/Pix4Devs/CrusedSpirits">Github</a></strong>
+<strong><a href="https://github.com/Pix4Devs/CursedSpirits">Github</a></strong>
 |
 <strong><a href="https://github.com/Pix4Devs">Other Tools</a></strong>
 |
