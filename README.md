@@ -19,7 +19,7 @@ CursedSpirits is a powerful stress testing tool designed to assess the robustnes
 We have recorded a whopping 400 000 requests per second on our 8 core dedicated server with 1 Gbps network bandwidth.
 
 ## Getting Started
-CursedSpirits requires golang to build follow the instructions at https://go.dev/doc/install to get your toolchain.
+CursedSpirits requires golang to build. Follow the instructions at https://go.dev/doc/install to get your toolchain.
 To use CursedSpirits, you need to follow these steps:
 
  1. Clone the Repository
