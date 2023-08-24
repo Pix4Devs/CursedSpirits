@@ -44,7 +44,8 @@ Get your self `Go` bin and chain set, afterwards you can use the `go build` comm
 ## TODO list
 
 - [x] Automatic proxy scraping
-- [ ] Automatic proxy checking
+- [x] Automatic proxy checking
+- [ ] All-in-one start. (proxy scraping -> checking -> start)
 
 # Disclaimer
 
