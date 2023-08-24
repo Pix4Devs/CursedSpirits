@@ -9,7 +9,7 @@
 </p>
 
 # L7 Stress Tester - CrusedSpirits
-CursedSpirits is a powerful stress testing tool designed to assess the robustness and performance of your web applications through Layer 7 stress testing. This tool allows you to simulate heavy traffic and analyze how your application handles it.
+CursedSpirits is a powerful stress testing tool designed to assess the robustness and performance of your web applications through Layer 7 stress testing. This tool allows you to simulate heavy traffic.
 
 <p align="center">
 <img src="https://www.hindustantimes.com/ht-img/img/2023/07/28/1600x900/Screenshot_2023-07-27_234919_1690524990508_1690525009794.png" width="450" class="frame">
