@@ -55,7 +55,7 @@ We welcome contributions from the community to enhance CursedSpirits. If you enc
 
 ## License
 
-This project is licensed under the [MIT License](https://github.com/Pix4Devs/CursedSpirits/LICENSE).
+This project is licensed under the [MIT License](https://mit-license.org).
 
 ----------
 
