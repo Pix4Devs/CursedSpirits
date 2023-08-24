@@ -55,9 +55,8 @@ We welcome contributions from the community to enhance CursedSpirits. If you enc
 
 ## License
 
-This project is licensed under the [MIT License](https://chat.openai.com/LICENSE).
+This project is licensed under the [MIT License](https://github.com/Pix4Devs/CursedSpirits/LICENSE).
 
 ----------
 
-Pix4Devs - Empowering Developers with Powerful Tools 
-Visit us at [https://pix4.dev](https://pix4.dev/)
+Pix4Devs - Empowering Developers with Powerful Tools, Visit us at [https://pix4.dev](https://pix4.dev/)
