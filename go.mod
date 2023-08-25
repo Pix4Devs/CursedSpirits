@@ -1,6 +1,6 @@
 module Pix4Devs/CursedSpirits
 
-go 1.23
+go 1.21
 
 require (
 	github.com/MidasVanVeen/proxy-checker v0.0.0-20230822233427-3ffea3dd5c04 // indirect
