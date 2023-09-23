@@ -8,7 +8,7 @@
 <strong><a href="https://pix4.dev">Pix4.dev</a></strong>
 </p>
 
-# L7 Stress Tester - CrusedSpirits
+# L7 Stress Tester - CursedSpirits
 CursedSpirits is a powerful stress testing tool designed to assess the robustness and performance of your web applications through Layer 7 stress testing. This tool allows you to simulate heavy traffic.
 
 <p align="center">
