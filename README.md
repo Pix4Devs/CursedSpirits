@@ -16,7 +16,7 @@ CursedSpirits is a powerful stress testing tool designed to assess the robustnes
 </p>
 
 > **Exterminator:**<br>
-> CLI tool that wraps and empowers CursedSpirits with some hot-reloads and amplifications.
+> CLI tool that wraps and empowers CursedSpirits with hot-reloads and amplifications.
 > <br><a href="https://github.com/Z3NTL3/Exterminator/">View</a>
 
 ## Stats
