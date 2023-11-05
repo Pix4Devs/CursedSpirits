@@ -15,6 +15,10 @@ CursedSpirits is a powerful stress testing tool designed to assess the robustnes
 <img src="https://www.hindustantimes.com/ht-img/img/2023/07/28/1600x900/Screenshot_2023-07-27_234919_1690524990508_1690525009794.png" width="450" class="frame">
 </p>
 
+> **Exterminator:**<br>
+> CLI tool that wraps and empowers CursedSpirits with some hot-reloads and amplifications.
+> <br><a href="https://github.com/Z3NTL3/Exterminator/">View</a>
+
 ## Stats
 We have recorded a whopping 400 000 requests per second on our 8 core dedicated server with 1 Gbps network bandwidth.
 <p align="center">
