@@ -41,7 +41,6 @@ func (ctx *FloodCtx) Jujutsu(proxy string) {
 	if err != nil {
 		return
 	}
-	defer req.Body.Close()
 
 	{
 		req.Header.Add("cache-control", "must-revalidate")
