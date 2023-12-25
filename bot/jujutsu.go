@@ -3,7 +3,6 @@ package bot
 import (
 	"crypto/tls"
 	"fmt"
-	"io"
 	"math/rand"
 	"net/http"
 	"os"
@@ -38,12 +37,11 @@ func (ctx *FloodCtx) Jujutsu(proxy string) {
 		MaxConnsPerHost:   0,
 	}
 
-	var body io.ReadCloser
-	req, err := http.NewRequest("GET", ctx.Target, body)
+	req, err := http.NewRequest("GET", ctx.Target, nil)
 	if err != nil {
 		return
 	}
-	defer body.Close()
+	defer req.Body.Close()
 
 	{
 		req.Header.Add("cache-control", "must-revalidate")
