@@ -1,11 +1,6 @@
 package main
 
 import (
-	"Pix4Devs/CursedSpirits/bot"
-	"Pix4Devs/CursedSpirits/cmd"
-	"Pix4Devs/CursedSpirits/fancy"
-	"Pix4Devs/CursedSpirits/filesystem"
-	"Pix4Devs/CursedSpirits/globals"
 	"fmt"
 	"log"
 	"math/rand"
@@ -15,13 +10,19 @@ import (
 	"runtime"
 	"strings"
 	"time"
+
+	"Pix4Devs/CursedSpirits/bot"
+	"Pix4Devs/CursedSpirits/cmd"
+	"Pix4Devs/CursedSpirits/fancy"
+	"Pix4Devs/CursedSpirits/filesystem"
+	"Pix4Devs/CursedSpirits/globals"
 )
 
 var (
-	TARGET = &globals.TARGET
-	CONCURRENCY = &globals.CONCURRENCY
-	DURATION = &globals.DURATION
-	PROXY_TYPE = &globals.PROXY_TYPE
+	TARGET          = &globals.TARGET
+	CONCURRENCY     = &globals.CONCURRENCY
+	DURATION        = &globals.DURATION
+	PROXY_TYPE      = &globals.PROXY_TYPE
 	VALID_PROTOCOLS = &globals.VALID_PROTOCOLS
 )
 
@@ -42,21 +43,22 @@ func main() {
 
 	var valid bool
 	for i := 0; i < len((*VALID_PROTOCOLS)); i++ {
-		//fmt.Println((*VALID_PROTOCOLS)[i])
+		// fmt.Println((*VALID_PROTOCOLS)[i])
 		if (*VALID_PROTOCOLS)[i] == *PROXY_TYPE {
 			valid = true
 			break
 		}
 	}
-	
+
 	if !valid {
 		log.Fatal("Proxy protocol can be only socks4 or socks5, see <bin> -help for more info")
 	}
-	
+
 	cores := runtime.NumCPU()
 	runtime.GOMAXPROCS(cores)
 
-	base, err := os.Getwd(); if err != nil {
+	base, err := os.Getwd()
+	if err != nil {
 		log.Fatal(err)
 	}
 
@@ -67,21 +69,21 @@ func main() {
 	}
 
 	for k, v := range fileEntry {
-		data := filesystem.Read(filepath.Join(base,"context",k))
+		data := filesystem.Read(filepath.Join(base, "context", k))
 		*v.(*[]string) = data
 	}
 
 	v, _ := fileEntry["proxies.txt"].(*[]string)
-	if(len(*v) < 200) {
+	if len(*v) < 200 {
 		log.Fatal("Requires minimum of 200 proxies")
 	}
 
 	f := &bot.FloodCtx{
-		Target: *TARGET,
+		Target:      *TARGET,
 		Concurrency: *CONCURRENCY,
-		StopAt: int(time.Now().Add(time.Second * time.Duration(*DURATION)).Unix()),
+		StopAt:      int(time.Now().Add(time.Second * time.Duration(*DURATION)).Unix()),
 		Client: &http.Client{
-			Jar: http.DefaultClient.Jar,
+			Jar:     http.DefaultClient.Jar,
 			Timeout: time.Duration(time.Second * 20),
 		},
 		Protocol: *PROXY_TYPE,
@@ -91,7 +93,7 @@ func main() {
 	fmt.Println()
 
 	for {
-		go func(){
+		go func() {
 			f.Jujutsu(globals.PROXIES[rand.Intn(len(globals.PROXIES))])
 		}()
 	}
