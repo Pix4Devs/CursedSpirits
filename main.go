@@ -1,7 +1,6 @@
 package main
 
 import (
-	"crypto/tls"
 	"fmt"
 	"log"
 	"math/rand"
@@ -18,8 +17,6 @@ import (
 	"Pix4Devs/CursedSpirits/fancy"
 	"Pix4Devs/CursedSpirits/filesystem"
 	"Pix4Devs/CursedSpirits/globals"
-
-	"h12.io/socks"
 )
 
 var (
@@ -99,8 +96,6 @@ func main() {
 
 	for {
 		go func() {
-			f.Mx.Lock()
-			defer f.Mx.Unlock()
 			// ==================
 			// reset tcp cache state
 			// refer to godoc:
@@ -108,14 +103,9 @@ func main() {
 			// The [Client.Transport] typically has internal state (cached TCP connections), so Clients should be reused instead of created as needed.
 			// Clients are safe for concurrent use by multiple goroutines.
 			// ==================
-			proxy := globals.PROXIES[rand.Intn(len(globals.PROXIES))]
-			f.Client.Transport = &http.Transport{
-				TLSClientConfig:   &tls.Config{InsecureSkipVerify: true},
-				Dial:              socks.Dial(fmt.Sprintf("%s://%s", f.Protocol, proxy)),
-				ForceAttemptHTTP2: true,
-				MaxConnsPerHost:   0,
-			}
-			f.Jujutsu(proxy)
+			f.Client.Transport = http.DefaultTransport
+
+			f.Jujutsu(globals.PROXIES[rand.Intn(len(globals.PROXIES))])
 		}()
 	}
 }

@@ -1,2 +1,0 @@
-# assure each line represents one proxy
-# in the ip:port format
