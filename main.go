@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"slices"
 	"strings"
 	"sync"
 	"time"
@@ -36,6 +37,15 @@ func main() {
 	cmd.Init()
 	if err := cmd.RootCmd.Execute(); err != nil {
 		log.Fatal(err)
+	}
+
+	if slices.ContainsFunc(os.Args, func(s string) bool {
+		if strings.Contains(s, "--help") {
+			return true
+		}
+		return false
+	}) {
+		os.Exit(0)
 	}
 
 	if !strings.Contains(*TARGET, "http://") && !strings.Contains(*TARGET, "https://") {
