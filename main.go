@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"math/rand"
-	"net/http"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -92,10 +91,6 @@ func main() {
 		Target:      *TARGET,
 		Concurrency: *CONCURRENCY,
 		StopAt:      int(time.Now().Add(time.Second * time.Duration(*DURATION)).Unix()),
-		Client: &http.Client{
-			Jar:     http.DefaultClient.Jar,
-			Timeout: time.Duration(time.Second * 20),
-		},
 		Protocol: *PROXY_TYPE,
 	}
 
