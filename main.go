@@ -5,6 +5,7 @@ import (
 	"log"
 	"math/rand"
 	"os"
+	"os/signal"
 	"path/filepath"
 	"runtime"
 	"slices"
@@ -96,6 +97,16 @@ func main() {
 
 	fancy.PrintCtx("Started flood against '" + *TARGET + "'")
 	fmt.Println()
+
+
+	exit := make(chan os.Signal) 
+	signal.Notify(exit, os.Interrupt)
+
+	// setup one listener for signal interruption like ctrl+c
+	go func(){
+		<-exit
+		os.Exit(0)
+	}()
 
 	for {
 		go func() {
