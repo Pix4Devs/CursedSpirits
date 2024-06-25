@@ -6,7 +6,6 @@ import (
 	"math/rand"
 	"net/http"
 	"os"
-	"sync"
 	"time"
 
 	"Pix4Devs/CursedSpirits/globals"
@@ -22,14 +21,11 @@ type (
 		StopAt      int
 		Client      *http.Client
 		Protocol    string
-		Mx          sync.Mutex
 	}
 )
 
 func (ctx *FloodCtx) Jujutsu(proxy string) {
 	if int(time.Now().Unix()) >= ctx.StopAt {
-		ctx.Mx.Lock()
-
 		fmt.Println("Forced STOP due to flood duration exceeded given time")
 		os.Exit(0)
 	}
@@ -65,9 +61,6 @@ func (ctx *FloodCtx) Jujutsu(proxy string) {
 }
 
 func (ctx *FloodCtx) cfg_tp(proxy string) {
-	ctx.Mx.Lock()
-	defer ctx.Mx.Unlock()
-
 	ctx.Client.Transport = &http.Transport{
 		TLSClientConfig:   &tls.Config{InsecureSkipVerify: true},
 		Dial:              socks.Dial(fmt.Sprintf("%s://%s?timeout=10s", ctx.Protocol, proxy)),
