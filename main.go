@@ -106,6 +106,7 @@ func main() {
 	// setup one listener for signal interruption like ctrl+c
 	go func(){
 		<-exit
+		fancy.PrintCtx("Called exit signal, exiting soon.")
 		os.Exit(0)
 	}()
 
