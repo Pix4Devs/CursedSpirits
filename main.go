@@ -10,6 +10,7 @@ import (
 	"runtime"
 	"slices"
 	"strings"
+	"syscall"
 	"time"
 
 	"Pix4Devs/CursedSpirits/bot"
@@ -100,7 +101,7 @@ func main() {
 
 
 	exit := make(chan os.Signal) 
-	signal.Notify(exit, os.Interrupt)
+	signal.Notify(exit, os.Interrupt, syscall.SIGINT)
 
 	// setup one listener for signal interruption like ctrl+c
 	go func(){
