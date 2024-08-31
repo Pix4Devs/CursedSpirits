@@ -9,24 +9,23 @@
 </p>
 
 # L7 Stress Tester - CursedSpirits
-[**revamp soon**]<br>
+
 CursedSpirits is a powerful stress testing tool designed to assess the robustness and performance of your web applications through Layer 7 stress testing. This tool allows you to simulate heavy traffic.
 
 <p align="center">
 <img src="https://www.hindustantimes.com/ht-img/img/2023/07/28/1600x900/Screenshot_2023-07-27_234919_1690524990508_1690525009794.png" width="450" class="frame">
 </p>
 
-> **Exterminator:**<br>
-> CLI tool that wraps and empowers CursedSpirits with some hot-reloads and amplifications.
-> <br><a href="https://github.com/Z3NTL3/Exterminator/">`View`</a>
+---
+## Effectiveness
+
+Tested thoroughly as of 31-08-2024 and concluded still to be capable of very strong layer 7 stress / load testing web servers.
+
 
 ## Stats
 
 We have recorded a whopping 400 000 requests per second on our 8 core dedicated server with 1 Gbps network bandwidth.
 
-<p align="center">
-<img src="https://images-ext-1.discordapp.net/external/H9bTk-XvqRyQ5JjHgx19_mU1P6G_KsDS2_4USksEYLU/https/camo.githubusercontent.com/56f79ca67dbc72081b9619508e3e6b256e4621ba1953db2ce6710cceddfc0a72/68747470733a2f2f6d656469612e646973636f72646170702e6e65742f6174746163686d656e74732f3935363331303834303436343737333230302f313134333435303535323730363031313235362f696d6167652e706e673f77696474683d31343430266865696768743d363038?width=1440&height=607" >
-</p>
 
 ## Getting Started
 
@@ -95,4 +94,4 @@ This project is licensed under the [MIT License](https://mit-license.org).
 
 ---
 
-Pix4Devs - Empowering Developers with Powerful Tools, Visit us at [https://pix4.dev](https://pix4.dev/)
+Pix4Devs - Empowering Developers with Powerful Tools
